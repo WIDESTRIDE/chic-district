@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>Payment — Chic District & Co.</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap');
+
+:root {
+  --cream: #FBF7F0;
+  --cream-deep: #F3ECDD;
+  --ink: #555350;
+  --ink-soft: #6b6660;
+  --marigold: #D9A441;
+  --marigold-dk: #B87F2A;
+  --marigold-pale: #F2D98A;
+  --blush: #E7A9A0;
+  --sage: #93A67F;
+  --line: #E7E0D2;
+  --white: #FFFFFF;
+  --font-display: 'Lato', 'Helvetica Neue', sans-serif;
+  --font-body: 'Lato', system-ui, sans-serif;
+  --font-mono: 'Lato', monospace;
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 28px;
+  --shadow-card: 0 2px 14px rgba(43, 42, 40, 0.06);
+  --shadow-card-hover: 0 14px 30px rgba(43, 42, 40, 0.12);
+  --container: 1240px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+.logo-img { height: 84px; width: 84px; display: block; object-fit: contain; border-radius: 8px; }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+
+:focus-visible { outline: 3px solid var(--marigold-dk); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+.chic-mark { display: inline-flex; align-items: center; gap: 6px; }
+.chic-mark::before { content: "◆"; color: var(--marigold); font-size: 10px; flex: none; }
+
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--marigold-dk); font-weight: 600; }
+
+.utility-bar { background: var(--ink); color: #d8d3c8; font-size: 12.5px; }
+.utility-bar .wrap { display: flex; justify-content: space-between; align-items: center; height: 38px; }
+.utility-bar select { background: transparent; color: inherit; border: none; font-size: 12.5px; font-family: inherit; }
+.utility-bar .links { display: flex; gap: 18px; }
+.utility-bar .links a:hover { color: var(--marigold-pale); }
+
+.site-header { background: var(--white); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 40; }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; gap: 24px; }
+.logo { font-family: var(--font-display); font-weight: 700; font-size: 26px; display: flex; align-items: center; gap: 10px; color: var(--ink); white-space: nowrap; letter-spacing: -0.5px; }
+.main-nav { display: flex; gap: 30px; font-weight: 600; font-size: 14.5px; }
+.main-nav a { position: relative; padding: 6px 0; }
+.main-nav a.active, .main-nav a:hover { color: var(--marigold-dk); }
+.main-nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: var(--marigold); border-radius: 3px; }
+.header-actions { display: flex; align-items: center; gap: 18px; }
+.icon-btn { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid transparent; background: transparent; color: var(--ink); }
+.icon-btn:hover { background: var(--cream-deep); }
+.icon-btn svg { width: 20px; height: 20px; }
+.cart-count { position: absolute; top: -2px; right: -2px; background: var(--marigold); color: var(--white); font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.burger { display: none; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius-sm); font-weight: 600; font-size: 13.5px; letter-spacing: 0.06em; text-transform: uppercase; border: 2px solid var(--ink); background: transparent; color: var(--ink); transition: background .18s ease, color .18s ease, transform .18s ease; }
+.btn:hover { background: var(--ink); color: var(--white); transform: translateY(-1px); }
+.btn-solid { background: var(--marigold); border-color: var(--marigold); color: var(--ink); }
+.btn-solid:hover { background: var(--marigold-dk); border-color: var(--marigold-dk); color: var(--white); }
+.btn-block { width: 100%; justify-content: center; }
+.btn-sm { padding: 10px 18px; font-size: 12px; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+
+.site-footer { background: var(--cream-deep); border-top: 1px solid var(--line); }
+.footer-top { padding: 64px 0 40px; display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 40px; }
+.footer-top h4 { font-family: var(--font-display); font-size: 15px; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 18px; }
+.footer-about .logo { margin-bottom: 14px; }
+.footer-about p { color: var(--ink-soft); font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+.tag-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag-pills a { border: 1px solid var(--line); padding: 7px 14px; border-radius: 20px; font-size: 12.5px; background: var(--white); }
+.tag-pills a:hover { border-color: var(--marigold); color: var(--marigold-dk); }
+.brand-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.brand-grid div { background: var(--white); border: 1px solid var(--line); border-radius: 8px; height: 50px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); }
+.social-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.social-row a { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; background: var(--white); font-size: 13px; }
+.social-row a:hover { background: var(--marigold); border-color: var(--marigold); }
+.newsletter-form { display: flex; gap: 0; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--white); }
+.newsletter-form input { border: none; padding: 12px 14px; flex: 1; font-family: inherit; font-size: 13px; background: transparent; }
+.newsletter-form input:focus { outline: none; }
+.newsletter-form button { border: none; background: var(--marigold); color: var(--ink); padding: 0 18px; font-weight: 700; }
+.newsletter-form button:hover { background: var(--marigold-dk); color: var(--white); }
+
+.footer-links { border-top: 1px solid var(--line); padding: 22px 0; font-size: 12.5px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.footer-links a:hover { color: var(--marigold-dk); }
+.footer-bottom { border-top: 1px solid var(--line); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--ink-soft); }
+.payments { display: flex; align-items: center; gap: 12px; font-size: 12px; color: #333; }
+.payments img { height: 24px; width: auto; display: block; object-fit: contain; }
+
+.breadcrumb { padding: 18px 0; font-size: 13px; color: var(--ink-soft); }
+.breadcrumb a:hover { color: var(--marigold-dk); }
+.breadcrumb .sep { margin: 0 6px; opacity: .5; }
+
+.page-head { padding: 44px 0 8px; }
+.page-head h1 { font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; margin: 6px 0 6px; }
+.page-head p { color: var(--ink-soft); margin: 0 0 10px; }
+
+.step-track { display: flex; align-items: center; gap: 8px; margin: 20px 0 40px; flex-wrap: wrap; }
+.step-track .step { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+.step-track .step .num { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; background: var(--white); }
+.step-track .step.active { color: var(--ink); }
+.step-track .step.active .num { background: var(--marigold); border-color: var(--marigold); }
+.step-track .step.done .num { background: var(--sage); border-color: var(--sage); color: var(--white); }
+.step-track .divider { width: 30px; height: 1px; background: var(--line); }
+
+.form-field { margin-bottom: 16px; }
+.form-field label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--ink-soft); }
+.form-field input, .form-field select, .form-field textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 9px; font-family: inherit; font-size: 14px; background: var(--white); }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--marigold); outline: none; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.checkout-layout { display: grid; grid-template-columns: 1fr 400px; gap: 44px; padding-bottom: 90px; align-items: start; }
+.checkout-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 28px; margin-bottom: 24px; }
+.checkout-card h3 { font-family: var(--font-display); font-size: 18px; margin: 0 0 20px; display: flex; align-items: center; gap: 8px; }
+
+.order-summary { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 26px; position: sticky; top: 100px; }
+.order-summary h3 { font-family: var(--font-display); font-size: 17px; margin: 0 0 18px; }
+.summary-line-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: center; }
+.summary-line-item img { width: 52px; height: 62px; border-radius: 8px; object-fit: cover; flex: none; }
+.summary-line-item .info { flex: 1; }
+.summary-line-item .info .name { font-size: 13px; font-weight: 600; }
+.summary-line-item .info .meta { font-size: 11.5px; color: var(--ink-soft); }
+.summary-line-item .price { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+
+.summary-totals { padding-top: 16px; }
+.summary-totals .row { display: flex; justify-content: space-between; font-size: 13.5px; padding: 6px 0; color: var(--ink-soft); }
+.summary-totals .row.grand { color: var(--ink); font-weight: 700; font-size: 16px; border-top: 1px solid var(--line); margin-top: 8px; padding-top: 14px; }
+
+.pay-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+.pay-method { border: 2px solid var(--line); border-radius: 12px; padding: 16px 10px; text-align: center; cursor: pointer; font-size: 12.5px; font-weight: 700; }
+.pay-method input { display: none; }
+.pay-method .glyph { font-size: 22px; display: block; margin-bottom: 6px; }
+.pay-method.checked { border-color: var(--marigold); background: var(--marigold-pale); }
+
+/* ---- Bank-transfer-only mode ---- */
+.pay-method.disabled { opacity: .45; cursor: not-allowed; background: var(--cream); }
+.pay-method .unavail { display: block; margin-top: 4px; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+
+.notice-banner { display: flex; gap: 12px; align-items: flex-start; background: #FFF6E0; border: 1px solid var(--marigold); border-radius: 12px; padding: 14px 16px; margin-bottom: 22px; font-size: 13.5px; line-height: 1.5; }
+.notice-banner .notice-icon { width: 26px; height: 26px; flex: none; border-radius: 50%; background: var(--marigold); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 14px; }
+.notice-banner strong { color: var(--ink); }
+
+.bank-details { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 4px 0 14px; }
+.bank-details .bd-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); background: var(--white); }
+.bank-details .bd-row:last-child { border-bottom: none; }
+.bank-details .bd-label { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.bank-details .bd-value { font-size: 15.5px; font-weight: 700; color: var(--ink); word-break: break-word; }
+.bank-details .bd-row.highlight { background: var(--cream); }
+.bank-details .bd-row.highlight .bd-value { font-size: 20px; letter-spacing: .08em; }
+.copy-btn { flex: none; border: 1px solid var(--line); background: var(--white); border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700; color: var(--ink); min-height: 40px; }
+.copy-btn:hover { border-color: var(--marigold); color: var(--marigold-dk); }
+.transfer-steps { margin: 0; padding-left: 18px; list-style: decimal; color: var(--ink-soft); font-size: 13.5px; }
+.transfer-steps li { margin: 4px 0; }
+
+.card-preview { background: linear-gradient(135deg, #3a3a38, #2b2a28); color: var(--white); border-radius: 16px; padding: 24px; margin-bottom: 24px; font-family: var(--font-mono); min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; }
+.card-preview .chip { width: 34px; height: 24px; border-radius: 5px; background: var(--marigold-pale); }
+.card-preview .num { font-size: 17px; letter-spacing: .12em; }
+.card-preview .row { display: flex; justify-content: space-between; font-size: 10.5px; text-transform: uppercase; opacity: .8; }
+
+.success-banner { display: none; background: #E4E9DC; border: 1px solid var(--sage); border-radius: var(--radius-md); padding: 20px 24px; margin-bottom: 24px; align-items: center; gap: 12px; }
+.success-banner.show { display: flex; }
+.success-banner .icon { width: 36px; height: 36px; border-radius: 50%; background: var(--sage); color: var(--white); display: flex; align-items: center; justify-content: center; flex: none; font-weight: 700; }
+
+.error-banner { display: none; background: #FCE4D6; border: 1px solid #c0392b; border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 24px; font-size: 13.5px; color: #8B2E1F; }
+.error-banner.show { display: block; }
+
+.mobile-nav { position: fixed; inset: 0; z-index: 70; display: none; }
+.mobile-nav.open { display: block; }
+.mobile-nav .backdrop { position: absolute; inset: 0; background: rgba(43,42,40,.45); }
+.mobile-nav .panel { position: absolute; top: 0; left: 0; bottom: 0; width: 280px; max-width: 84vw; background: var(--white); padding: 26px; overflow-y: auto; }
+.mobile-nav .panel a { display: block; padding: 12px 0; font-weight: 600; border-bottom: 1px solid var(--line); }
+.mobile-nav-close { background: none; border: none; font-size: 22px; margin-bottom: 16px; }
+
+@media (max-width: 980px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) { .checkout-layout { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .order-summary { position: static; } }
+@media (max-width: 720px) {
+  .wrap { padding: 0 18px; }
+  .utility-bar .links a:not(:first-child) { display: none; }
+  .main-nav { display: none; }
+  .burger { display: flex; }
+  .footer-top { grid-template-columns: 1fr; padding: 44px 0 30px; }
+  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+}
+
+/* ============================================================
+   MOBILE ENHANCEMENTS — touch targets, breakpoints, typography
+   ============================================================ */
+html, body { overflow-x: hidden; }
+
+.icon-btn, .burger, .mobile-nav-close { min-width: 48px; min-height: 48px; }
+.btn { min-height: 48px; }
+.btn-sm { min-height: 44px; padding: 12px 18px; }
+.mobile-nav .panel a { min-height: 48px; display: flex; align-items: center; }
+.pay-method { min-height: 48px; }
+.form-field input, .form-field select, .form-field textarea { min-height: 48px; }
+.header-actions { gap: 12px; }
+.social-row a { width: 44px; height: 44px; }
+
+@media (max-width: 768px) {
+  .wrap { padding: 0 20px; }
+  .checkout-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .pay-methods { gap: 8px; }
+  .pay-method { padding: 12px 6px; font-size: 11.5px; }
+  .bank-details .bd-row.highlight .bd-value { font-size: 18px; }
+}
+
+/* ============================================================
+   MOBILE HEADER FIX — stops the wordmark from pushing the
+   search/cart icons off-screen on phones
+   ============================================================ */
+@media (max-width: 720px) {
+  .site-header .wrap { gap: 10px; }
+  .logo-img { height: 56px; width: 56px; }
+  .logo { font-size: 19px; gap: 8px; }
+  .header-actions { gap: 6px; }
+}
+
+@media (max-width: 480px) {
+  .site-header .wrap { height: 60px; gap: 8px; }
+  .logo-img { height: 36px; width: 36px; border-radius: 6px; }
+  .logo span { display: none; }
+}
+
+/* ============================================================
+   MOBILE MENU RESTRUCTURE — logo pinned top-left, search/cart
+   pinned top-right, and the account links (My Account, Wishlist,
+   Checkout, Login) relocated into the hamburger drawer beneath
+   the main nav links, left-aligned near the bottom of the panel.
+   The currency selector stays in the utility bar (NGN default),
+   now with room to display clearly since the account links row
+   is removed from the utility bar on mobile.
+   ============================================================ */
+@media (max-width: 720px) {
+  .site-header .wrap { justify-content: flex-start; }
+  .header-actions { margin-left: auto; }
+  .utility-bar .links:last-of-type { display: none; }
+}
+
+.mobile-nav-account-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 20px 0 2px;
+}
+</style>
+</head>
+<body>
+
+  <div class="utility-bar">
+    <div class="wrap">
+      <div class="links">
+        <select aria-label="Language"><option>English</option><option>Français</option><option>Español</option></select>
+        <select aria-label="Currency"><option>NGN</option><option>USD</option><option>EUR</option><option>GBP</option></select>
+      </div>
+      <div class="links">
+        <a href="account.html">My Account</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="account.html">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <button class="burger icon-btn" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a href="index.html" class="logo">
+        <img src="images/chic-logo.jpg" alt="Chic District & Co." class="logo-img">
+        <span>Chic District & Co.</span>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="shop.html?category=Dresses">Dresses</a>
+        <a href="shop.html?category=Tops">Tops</a>
+        <a href="shop.html?category=Bottoms">Bottoms</a>
+        <a href="shop.html?category=Outerwear">Outerwear</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        </button>
+        <a href="checkout.html" class="icon-btn" aria-label="Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="cart-count">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav">
+    <div class="backdrop"></div>
+    <div class="panel">
+      <button class="mobile-nav-close" aria-label="Close menu">✕</button>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="shop.html?category=Dresses">Dresses</a>
+      <a href="shop.html?category=Tops">Tops</a>
+      <a href="shop.html?category=Bottoms">Bottoms</a>
+      <a href="shop.html?category=Outerwear">Outerwear</a>
+      <a href="index.html#contact">Contact</a>
+      <div class="mobile-nav-account-label">My Account</div>
+      <a href="account.html">My Account</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="account.html">Login</a>
+    </div>
+  </div>
+
+  <div class="wrap breadcrumb">
+    <a href="index.html">Home</a><span class="sep">/</span><a href="checkout.html">Checkout</a><span class="sep">/</span><span>Payment</span>
+  </div>
+
+  <div class="wrap page-head">
+    <span class="eyebrow chic-mark">Last Step</span>
+    <h1>Payment</h1>
+    <div class="step-track">
+      <div class="step done"><span class="num">✓</span> Cart</div>
+      <div class="divider"></div>
+      <div class="step done"><span class="num">✓</span> Shipping</div>
+      <div class="divider"></div>
+      <div class="step active"><span class="num">3</span> Payment</div>
+    </div>
+  </div>
+
+  <div class="wrap checkout-layout">
+    <div>
+      <div class="success-banner" id="success-banner">
+        <div class="icon">✓</div>
+        <div>
+          <strong>Order placed!</strong>
+          <div style="font-size:13px; color:var(--ink-soft);" id="success-detail">Confirmation sent to your email.</div>
+        </div>
+      </div>
+
+      <div class="error-banner" id="error-banner"></div>
+
+      <div class="checkout-card">
+        <h3><span class="chic-mark"></span>Payment Method</h3>
+
+        <!-- NOTICE: Bank Transfer is the only working channel for now -->
+        <div class="notice-banner" role="status">
+          <span class="notice-icon" aria-hidden="true">!</span>
+          <div>
+            <strong>Bank Transfer is currently the only payment channel available.</strong>
+            Card and PayPal payments are temporarily unavailable — please pay by transfer to the account below.
+          </div>
+        </div>
+
+        <div class="pay-methods">
+          <label class="pay-method disabled" aria-disabled="true" title="Temporarily unavailable">
+            <input type="radio" name="paymethod" value="card" disabled>
+            <span class="glyph">💳</span> Card
+            <span class="unavail">Unavailable</span>
+          </label>
+          <label class="pay-method disabled" aria-disabled="true" title="Temporarily unavailable">
+            <input type="radio" name="paymethod" value="paypal" disabled>
+            <span class="glyph">🅿️</span> PayPal
+            <span class="unavail">Unavailable</span>
+          </label>
+          <label class="pay-method checked">
+            <input type="radio" name="paymethod" value="transfer" checked>
+            <span class="glyph">🏦</span> Bank Transfer
+          </label>
+        </div>
+
+        <div id="card-preview" class="card-preview" style="display:none;">
+          <div class="chip"></div>
+          <div class="num" id="preview-number">•••• •••• •••• ••••</div>
+          <div class="row">
+            <span id="preview-name">FULL NAME</span>
+            <span id="preview-expiry">MM/YY</span>
+          </div>
+        </div>
+
+        <form id="card-form" onsubmit="return false;" style="display:none;">
+          <div class="form-field">
+            <label for="pay-name">Name on card</label>
+            <input type="text" id="pay-name" placeholder="Amara Okafor">
+          </div>
+          <div class="form-field">
+            <label for="pay-number">Card number</label>
+            <input type="text" id="pay-number" placeholder="4242 4242 4242 4242" maxlength="19">
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="pay-expiry">Expiry date</label>
+              <input type="text" id="pay-expiry" placeholder="MM/YY" maxlength="5">
+            </div>
+            <div class="form-field">
+              <label for="pay-cvc">CVC</label>
+              <input type="text" id="pay-cvc" placeholder="123" maxlength="4">
+            </div>
+          </div>
+        </form>
+
+        <div id="paypal-note" style="display:none; color:var(--ink-soft); font-size:13.5px;">
+          You'll be redirected to PayPal to complete your payment securely after placing your order.
+        </div>
+
+        <div id="transfer-note">
+          <div class="bank-details">
+            <div class="bd-row highlight">
+              <div>
+                <div class="bd-label">Account Number</div>
+                <div class="bd-value" id="bd-account">6238080590</div>
+              </div>
+              <button type="button" class="copy-btn" data-copy="6238080590">Copy</button>
+            </div>
+            <div class="bd-row">
+              <div>
+                <div class="bd-label">Bank</div>
+                <div class="bd-value">Fidelity Bank</div>
+              </div>
+            </div>
+            <div class="bd-row">
+              <div>
+                <div class="bd-label">Account Name</div>
+                <div class="bd-value">Chinemeremogo Okoli</div>
+              </div>
+            </div>
+          </div>
+          <ol class="transfer-steps">
+            <li>Transfer the exact <strong>Total</strong> shown in your order summary to the account above.</li>
+            <li>Click <strong>Place Order</strong> below — you'll get an order number.</li>
+            <li>Use your order number as the transfer narration/reference so we can match your payment.</li>
+          </ol>
+        </div>
+      </div>
+
+      <button class="btn btn-solid btn-block" id="place-order-btn">Place Order</button>
+    </div>
+
+    <aside class="order-summary">
+      <h3>Order Summary</h3>
+      <div id="summary-items"></div>
+      <div class="summary-totals" id="summary-totals"></div>
+    </aside>
+  </div>
+
+  <footer class="site-footer" id="contact">
+    <div class="wrap footer-top">
+      <div class="footer-about">
+        <a href="index.html" class="logo">
+          <img src="images/logo.jpg" alt="Chic District & Co." class="logo-img">
+          <span>Chic District & Co.</span>
+        </a>
+        <p>📍 Back of Oba Palace, Abule-ado Festac 2, Lagos</p>
+        <p>📞 (+234) 813 908 1803</p>
+        <p>✉️ chicdistrict@gmail.com</p>
+      </div>
+      <div>
+        <h4>Popular Tags</h4>
+        <div class="tag-pills">
+          <a href="shop.html?category=Dresses">New In</a>
+          <a href="shop.html">Best Sellers</a>
+          <a href="shop.html">Sale</a>
+          <a href="shop.html?category=Outerwear">Outerwear</a>
+          <a href="shop.html">Lookbook</a>
+          <a href="shop.html">View All</a>
+        </div>
+      </div>
+      <div>
+        <h4>Trusted Brands</h4>
+        <div class="brand-grid">
+          <div>CHIC&nbsp;STUDIO</div><div>ATELIER&nbsp;NO.5</div>
+          <div>LUXE&nbsp;THREADS</div><div>MODERN&nbsp;MUSE</div>
+        </div>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Pinterest">PT</a>
+          <a href="#" aria-label="Facebook">FB</a>
+        </div>
+        <h4 style="margin-top:22px;">Newsletter</h4>
+        <form class="newsletter-form" onsubmit="return false;">
+          <input type="email" placeholder="Your email address" aria-label="Email address">
+          <button type="submit" aria-label="Sign up">→</button>
+        </form>
+      </div>
+    </div>
+    <div class="wrap footer-links">
+      <a href="#">Wholesale</a><a href="#">Privacy &amp; Security</a><a href="#">Help</a>
+      <a href="#">Seller Home</a><a href="#">Search Products</a><a href="#">Refined Products</a>
+      <a href="#">Prices</a><a href="#">Reviews</a><a href="#">Customer Service</a><a href="#">Terms of Use</a>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2026 Chic District &amp; Co. All Rights Reserved.</span>
+      <div class="payments">
+        <img src="images/visa.jpg" alt="Visa">
+        <i class="fa-brands fa-cc-mastercard"></i>
+        <i class="fa-brands fa-cc-amex"></i>
+        <i class="fa-brands fa-cc-paypal"></i>
+        <i class="fa-brands fa-apple-pay"></i>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+/* ============================================================
+   CHIC DISTRICT & CO. — product data loader
+   FIX: points at the ONE unified Apps Script backend (Code.gs).
+   ============================================================ */
+(function () {
+  "use strict";
+  const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwst6GwoVOFi4aRZ9lhn7bEMCwW9IWvXtHTc_9xstgEgBpCQLmweKnjJKuo0UeMmzd3/exec";
+  window.CHIC_API_URL = SHEET_API_URL;
+
+  const FALLBACK_PRODUCTS = [
+    { id: 1, name: "Sunlit Linen Dress", description: "A breezy linen midi dress with a soft floral print.", category: "Dresses", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Blush", colorHex: "e7a9a0", price: 89.99, salePrice: null, isNew: true, rating: 4.7, reviews: 58, sizes: "XS,S,M,L,XL", sku: "CC-00001", imageSrc: "images/girls-1.jpg" },
+    { id: 2, name: "Tailored Crop Trouser", description: "A sharp, cropped silhouette in seasonless wool crepe.", category: "Bottoms", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Sage", colorHex: "93a67f", price: 110.00, salePrice: 88.00, isNew: false, rating: 4.5, reviews: 34, sizes: "XS,S,M,L,XL", sku: "CC-00002", imageSrc: "images/boys-1.jpg" },
+    { id: 3, name: "Cashmere Crewneck", description: "Lightweight, ultra-soft cashmere knit.", category: "Tops", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Cream", colorHex: "f6efe2", price: 145.00, salePrice: null, isNew: true, rating: 4.9, reviews: 112, sizes: "XS,S,M,L", sku: "CC-00003", imageSrc: "images/baby-1.jpg" },
+    { id: 4, name: "Block Heel Mule", description: "A sculptural heel adds modern edge.", category: "Shoes", ageGroup: "36-41", ageGroupLabel: "36–41", color: "Marigold", colorHex: "d9a441", price: 130.00, salePrice: null, isNew: false, rating: 4.6, reviews: 89, sizes: "36,37,38,39,40,41", sku: "CC-00004", imageSrc: "images/shoes-1.jpg" },
+    { id: 5, name: "Silk Twill Scarf", description: "Pure silk twill — small details, beautifully made.", category: "Accessories", ageGroup: "One Size", ageGroupLabel: "One Size", color: "Butter", colorHex: "f2d98a", price: 65.00, salePrice: 45.00, isNew: true, rating: 4.4, reviews: 21, sizes: "One Size", sku: "CC-00005", imageSrc: "images/accessories-1.jpg" },
+    { id: 6, name: "Pleated Midi Skirt", description: "Twirl-ready knife pleats over a silky lining.", category: "Bottoms", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Blush", colorHex: "e7a9a0", price: 95.00, salePrice: null, isNew: false, rating: 4.8, reviews: 64, sizes: "XS,S,M,L,XL", sku: "CC-00006", imageSrc: "images/girls-2.jpg" },
+  ];
+
+  function normalizeProduct(raw) {
+    const sizes = String(raw.sizes || "").split(",").map((s) => s.trim()).filter(Boolean);
+    const isNew = raw.isNew === true || String(raw.isNew).trim().toUpperCase() === "TRUE";
+    const sp = raw.salePrice;
+    const salePrice = sp === "" || sp == null || isNaN(Number(sp)) ? null : Number(sp);
+    return {
+      id: Number(raw.id), name: String(raw.name || "").trim(), description: String(raw.description || "").trim(),
+      category: String(raw.category || "").trim(), ageGroup: String(raw.ageGroup || "").trim(),
+      ageGroupLabel: String(raw.ageGroupLabel || raw.ageGroup || "").trim(), color: String(raw.color || "").trim(),
+      colorHex: String(raw.colorHex || "d9a441").trim().replace(/^#/, ""), price: Number(raw.price) || 0,
+      salePrice, isNew, rating: Number(raw.rating) || 0, reviews: Number(raw.reviews) || 0,
+      sizes: sizes.length ? sizes : ["S", "M", "L"], sku: String(raw.sku || "").trim(), imageSrc: String(raw.imageSrc || "").trim(),
+    };
+  }
+
+  function productImage(p) { return p.imageSrc || productImageFallback(p); }
+  function productImageFallback(p, w = 400, h = 500) {
+    const hex = (p && p.colorHex) || "d9a441";
+    return `https://placehold.co/${w}x${h}/${hex}/2b2a28?font=playfair-display&text=${encodeURIComponent((p && p.category) || "Product")}`;
+  }
+
+  // FIX: shared price formatter — renders 15679.99 as "15,679.99"
+  // (thousands comma separator + fixed 2 decimals).
+  function formatPrice(n) {
+    const num = Number(n) || 0;
+    return num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  window.chicProductImage = productImage;
+  window.chicProductImageFallback = productImageFallback;
+  window.chicFormatPrice = formatPrice;
+
+  window.CHIC_READY = (async function loadProducts() {
+    let usingFallback = false;
+    try {
+      const url = SHEET_API_URL + "?action=getProducts";
+      const res = await fetch(url, { method: "GET", redirect: "follow", cache: "no-store" });
+      if (!res.ok) throw new Error("Sheet fetch failed: HTTP " + res.status);
+      const raw = await res.json();
+      if (raw && raw.error) throw new Error(raw.error);
+      const products = (Array.isArray(raw) ? raw : []).map(normalizeProduct).filter((p) => p.id);
+      if (!products.length) throw new Error("Sheet returned zero products");
+      window.CHIC_PRODUCTS = products;
+    } catch (err) {
+      console.warn("Chic District: showing sample data —", err.message);
+      window.CHIC_PRODUCTS = FALLBACK_PRODUCTS.map(normalizeProduct);
+      usingFallback = true;
+    }
+    window.CHIC_SOURCE = usingFallback ? "fallback" : "sheet";
+    return window.CHIC_PRODUCTS;
+  })();
+})();
+</script>
+
+<script>
+/* ==========================================================================
+   CHIC DISTRICT & CO. — shared behaviors, cart + wishlist (localStorage-backed)
+   ========================================================================== */
+(function () {
+  "use strict";
+  const CART_KEY = "chic_cart_v1";
+  const WISHLIST_KEY = "chic_wishlist_v1";
+
+  function readJSON(key, fallback) { try { const raw = localStorage.getItem(key); if (!raw) return fallback; return JSON.parse(raw) ?? fallback; } catch (e) { return fallback; } }
+  function writeJSON(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {} }
+
+  function getCart() { return readJSON(CART_KEY, []); }
+  function saveCart(cart) { writeJSON(CART_KEY, cart); updateCartBadge(); }
+  function addToCart(id, qty = 1) { const cart = getCart(); const existing = cart.find((c) => c.id === id); if (existing) existing.qty += qty; else cart.push({ id, qty }); saveCart(cart); }
+  function removeFromCart(id) { saveCart(getCart().filter((c) => c.id !== id)); }
+  function clearCart() { saveCart([]); }
+  function cartCount() { return getCart().reduce((sum, c) => sum + c.qty, 0); }
+  function cartItemsWithProducts() { const products = window.CHIC_PRODUCTS || []; return getCart().map((c) => { const product = products.find((p) => p.id === c.id); return product ? { ...c, product } : null; }).filter(Boolean); }
+
+  function getWishlist() { return readJSON(WISHLIST_KEY, []); }
+  function saveWishlist(list) { writeJSON(WISHLIST_KEY, list); }
+  function isWishlisted(id) { return getWishlist().includes(id); }
+  function toggleWishlist(id) { let list = getWishlist(); const has = list.includes(id); list = has ? list.filter((x) => x !== id) : [...list, id]; saveWishlist(list); return !has; }
+
+  function updateCartBadge() { document.querySelectorAll(".cart-count").forEach((el) => (el.textContent = cartCount())); }
+  function refreshWishlistIcons() { document.querySelectorAll("[data-wishlist-toggle]").forEach((btn) => { const id = Number(btn.dataset.wishlistToggle); btn.classList.toggle("active", isWishlisted(id)); }); }
+
+  window.Chic = { getCart, saveCart, addToCart, removeFromCart, clearCart, cartCount, cartItemsWithProducts, getWishlist, isWishlisted, toggleWishlist, updateCartBadge, refreshWishlistIcons };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const burger = document.querySelector(".burger");
+    const mobileNav = document.querySelector(".mobile-nav");
+    const mobileClose = document.querySelector(".mobile-nav-close");
+    if (burger && mobileNav) {
+      burger.addEventListener("click", () => mobileNav.classList.add("open"));
+      mobileNav.querySelector(".backdrop").addEventListener("click", () => mobileNav.classList.remove("open"));
+      if (mobileClose) mobileClose.addEventListener("click", () => mobileNav.classList.remove("open"));
+    }
+    updateCartBadge();
+    refreshWishlistIcons();
+
+    document.body.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-add-to-cart]");
+      if (!btn) return;
+      const id = Number(btn.dataset.addToCart);
+      if (id) addToCart(id, 1);
+      const original = btn.dataset.label || btn.textContent;
+      btn.dataset.label = original;
+      btn.textContent = "Added ✓";
+      setTimeout(() => (btn.textContent = original), 1200);
+    });
+
+    document.body.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-wishlist-toggle]");
+      if (!btn) return;
+      const id = Number(btn.dataset.wishlistToggle);
+      toggleWishlist(id);
+      btn.classList.toggle("active", isWishlisted(id));
+    });
+  });
+})();
+</script>
+
+<script>
+  /* ==========================================================================
+     CHIC DISTRICT & CO. — payment + real order submission
+     POSTs to action=createOrder with the cart, totals, payment method, and
+     shipping info saved on the checkout page — using Content-Type text/plain
+     to avoid the CORS preflight that Apps Script Web Apps can't answer.
+     NOTE: Card and PayPal are disabled for now; Bank Transfer is the only
+     active channel. To re-enable, remove `disabled` from those radio inputs
+     and the `disabled` class from their labels.
+     ========================================================================== */
+  (async function () {
+    await window.CHIC_READY;
+
+    const API_URL = window.CHIC_API_URL;
+
+    async function postJSON(action, body) {
+      const url = API_URL + "?action=" + encodeURIComponent(action);
+      const res = await fetch(url, {
+        method: "POST",
+        redirect: "follow",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error("Request failed: HTTP " + res.status);
+      return res.json();
+    }
+
+    const cart = window.Chic.cartItemsWithProducts();
+    const itemsEl = document.getElementById("summary-items");
+    const totalsEl = document.getElementById("summary-totals");
+    const placeBtn = document.getElementById("place-order-btn");
+
+    // ---- read shipping info saved on checkout.html, and/or logged-in profile ----
+    let shipping = {};
+    try { shipping = JSON.parse(localStorage.getItem("chic_shipping_v1") || "{}"); } catch (e) { shipping = {}; }
+    let profile = null;
+    try { profile = JSON.parse(localStorage.getItem("chic_profile_v1") || "null"); } catch (e) { profile = null; }
+
+    const customerEmail = shipping.email || (profile && profile.email) || "";
+
+    let subtotal = 0, tax = 0, shippingCost = 0, total = 0;
+
+    if (!cart.length) {
+      itemsEl.innerHTML = `<p style="color:var(--ink-soft); font-size:13.5px; padding:10px 0;">Your cart is empty. <a href="shop.html" style="color:var(--marigold-dk); font-weight:600;">Browse the shop →</a></p>`;
+      totalsEl.innerHTML = "";
+      placeBtn.disabled = true;
+      placeBtn.style.opacity = ".5";
+    } else {
+      itemsEl.innerHTML = cart.map(({ product: p, qty }) => {
+        const unit = p.salePrice ?? p.price;
+        return `
+          <div class="summary-line-item">
+            <img src="${window.chicProductImage(p)}" alt="${p.name}"
+                 onerror="this.onerror=null;this.src='${window.chicProductImageFallback(p)}';">
+            <div class="info">
+              <div class="name">${p.name}</div>
+              <div class="meta">${p.ageGroupLabel} · Qty ${qty}</div>
+            </div>
+            <div class="price">₦${window.chicFormatPrice(unit * qty)}</div>
+          </div>`;
+      }).join("");
+
+      subtotal = cart.reduce((sum, { product: p, qty }) => sum + (p.salePrice ?? p.price) * qty, 0);
+      shippingCost = shipping.deliveryMethod === "express" ? 12000 : 0;
+      tax = subtotal * 0.075;
+      total = subtotal + shippingCost + tax;
+
+      totalsEl.innerHTML = `
+        <div class="row"><span>Subtotal</span><span>₦${window.chicFormatPrice(subtotal)}</span></div>
+        <div class="row"><span>Shipping</span><span>${shippingCost === 0 ? "Free" : "₦" + window.chicFormatPrice(shippingCost)}</span></div>
+        <div class="row"><span>Estimated tax</span><span>₦${window.chicFormatPrice(tax)}</span></div>
+        <div class="row grand"><span>Total</span><span>₦${window.chicFormatPrice(total)}</span></div>
+      `;
+
+      if (!customerEmail) {
+        showError("We couldn't find your contact email — please go back to Checkout and fill in your details first.");
+        placeBtn.disabled = true;
+        placeBtn.style.opacity = ".5";
+      }
+    }
+
+    // ---- payment method switching (only enabled methods respond) ----
+    const cardPreview = document.getElementById("card-preview");
+    const cardForm = document.getElementById("card-form");
+    const paypalNote = document.getElementById("paypal-note");
+    const transferNote = document.getElementById("transfer-note");
+
+    document.querySelectorAll('input[name="paymethod"]').forEach((input) => {
+      input.addEventListener("change", () => {
+        if (input.disabled) return;
+        document.querySelectorAll(".pay-method").forEach((el) => el.classList.remove("checked"));
+        input.closest(".pay-method").classList.add("checked");
+        cardPreview.style.display = input.value === "card" ? "flex" : "none";
+        cardForm.style.display = input.value === "card" ? "block" : "none";
+        paypalNote.style.display = input.value === "paypal" ? "block" : "none";
+        transferNote.style.display = input.value === "transfer" ? "block" : "none";
+      });
+    });
+
+    // ---- copy account number ----
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const text = btn.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (e) {
+          const ta = document.createElement("textarea");
+          ta.value = text; document.body.appendChild(ta); ta.select();
+          try { document.execCommand("copy"); } catch (err) {}
+          document.body.removeChild(ta);
+        }
+        btn.textContent = "Copied ✓";
+        setTimeout(() => (btn.textContent = "Copy"), 1500);
+      });
+    });
+
+    // ---- live card preview (kept for when card payments return) ----
+    const nameInput = document.getElementById("pay-name");
+    const numberInput = document.getElementById("pay-number");
+    const expiryInput = document.getElementById("pay-expiry");
+    const previewName = document.getElementById("preview-name");
+    const previewNumber = document.getElementById("preview-number");
+    const previewExpiry = document.getElementById("preview-expiry");
+
+    nameInput.addEventListener("input", () => { previewName.textContent = nameInput.value.trim().toUpperCase() || "FULL NAME"; });
+    numberInput.addEventListener("input", () => {
+      let digits = numberInput.value.replace(/\D/g, "").slice(0, 16);
+      numberInput.value = digits.replace(/(.{4})/g, "$1 ").trim();
+      previewNumber.textContent = numberInput.value || "•••• •••• •••• ••••";
+    });
+    expiryInput.addEventListener("input", () => {
+      let digits = expiryInput.value.replace(/\D/g, "").slice(0, 4);
+      if (digits.length > 2) digits = digits.slice(0, 2) + "/" + digits.slice(2);
+      expiryInput.value = digits;
+      previewExpiry.textContent = digits || "MM/YY";
+    });
+
+    function showError(message) {
+      const el = document.getElementById("error-banner");
+      el.textContent = message;
+      el.classList.add("show");
+    }
+    function hideError() {
+      document.getElementById("error-banner").classList.remove("show");
+    }
+
+    // ---- place order ----
+    placeBtn.addEventListener("click", async () => {
+      if (placeBtn.disabled) return;
+      hideError();
+
+      const paymentMethod = (document.querySelector('input[name="paymethod"]:checked:not(:disabled)') || {}).value || "transfer";
+      const shippingAddress = [shipping.firstName, shipping.lastName].filter(Boolean).join(" ")
+        + (shipping.address ? `, ${shipping.address}` : "")
+        + (shipping.city ? `, ${shipping.city}` : "")
+        + (shipping.country ? `, ${shipping.country}` : "")
+        + (shipping.postalCode ? ` ${shipping.postalCode}` : "");
+
+      const orderPayload = {
+        profileId: profile ? profile.id : "",
+        email: customerEmail,
+        customerName: shipping.firstName || (profile && profile.firstName) || "",
+        items: cart.map(({ product: p, qty }) => ({
+          id: p.id, name: p.name, qty, price: p.salePrice ?? p.price,
+        })),
+        subtotal, shipping: shippingCost, tax, total,
+        paymentMethod, shippingAddress,
+      };
+
+      placeBtn.textContent = "Processing…";
+      placeBtn.disabled = true;
+
+      try {
+        const result = await postJSON("createOrder", orderPayload);
+        if (result.error) throw new Error(result.error);
+
+        window.Chic.clearCart();
+        localStorage.removeItem("chic_shipping_v1");
+
+        const orderId = result.order.orderId;
+        document.getElementById("success-detail").innerHTML =
+          `Order #${orderId}. Please transfer <strong>₦${window.chicFormatPrice(total)}</strong> to ` +
+          `<strong>6238080590 · Fidelity Bank · Chinemeremogo Okoli</strong> and use <strong>${orderId}</strong> as your transfer reference. ` +
+          (result.emailSent === false
+            ? `We couldn't send the confirmation email, but your order is saved — please note your order number.`
+            : `A confirmation has been sent to ${customerEmail}.`);
+        document.getElementById("success-banner").classList.add("show");
+        placeBtn.textContent = "Order Placed ✓";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        console.error("Create order failed:", err);
+        showError("We couldn't place your order — " + err.message + ". Please try again.");
+        placeBtn.textContent = "Place Order";
+        placeBtn.disabled = false;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
