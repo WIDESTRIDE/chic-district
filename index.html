@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Chic District & Co. — Women's Clothing</title>
+ <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap');
+    
+    :root {
+      --cream: #FBF7F0;
+      --cream-deep: #F3ECDD;
+      --ink: #555350;
+      --ink-soft: #6b6660;
+      --marigold: #D9A441;
+      --marigold-dk: #B87F2A;
+      --marigold-pale: #F2D98A;
+      --blush: #E7A9A0;
+      --sage: #93A67F;
+      --line: #E7E0D2;
+      --white: #FFFFFF;
+      --font-display: 'Lato', 'Helvetica Neue', sans-serif;
+      --font-body: 'Lato', system-ui, sans-serif;
+      --font-mono: 'Lato', monospace;
+      --radius-sm: 6px;
+      --radius-md: 14px;
+      --radius-lg: 28px;
+      --shadow-card: 0 2px 14px rgba(43, 42, 40, 0.06);
+      --shadow-card-hover: 0 14px 30px rgba(43, 42, 40, 0.12);
+      --container: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+   .logo-img {
+  height: 84px;
+  width: 84px;
+  display: block;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    ul { list-style: none; margin: 0; padding: 0; }
+
+    .wrap { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+
+    :focus-visible { outline: 3px solid var(--marigold-dk); outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    .chic-mark { display: inline-flex; align-items: center; gap: 6px; }
+    .chic-mark::before { content: "◆"; color: var(--marigold); font-size: 10px; flex: none; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--marigold-dk);
+      font-weight: 600;
+    }
+
+    .utility-bar { background: var(--ink); color: #d8d3c8; font-size: 12.5px; }
+    .utility-bar .wrap { display: flex; justify-content: space-between; align-items: center; height: 38px; }
+    .utility-bar select { background: transparent; color: inherit; border: none; font-size: 12.5px; font-family: inherit; }
+    .utility-bar .links { display: flex; gap: 18px; }
+    .utility-bar .links a:hover { color: var(--marigold-pale); }
+
+    .site-header { background: var(--white); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 40; }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; gap: 24px; }
+    .logo { font-family: var(--font-display); font-weight: 700; font-size: 26px; display: flex; align-items: center; gap: 10px; color: var(--ink); white-space: nowrap; letter-spacing: -0.5px; }
+    .logo-mark { width: 38px; height: 38px; border-radius: 50%; background: var(--marigold); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 16px; font-weight: 700; }
+    .main-nav { display: flex; gap: 30px; font-weight: 600; font-size: 14.5px; }
+    .main-nav a { position: relative; padding: 6px 0; }
+    .main-nav a.active, .main-nav a:hover { color: var(--marigold-dk); }
+    .main-nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: var(--marigold); border-radius: 3px; }
+    .header-actions { display: flex; align-items: center; gap: 18px; }
+    .icon-btn { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid transparent; background: transparent; color: var(--ink); }
+    .icon-btn:hover { background: var(--cream-deep); }
+    .icon-btn svg { width: 20px; height: 20px; }
+    .cart-count { position: absolute; top: -2px; right: -2px; background: var(--marigold); color: var(--white); font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .burger { display: none; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius-sm); font-weight: 600; font-size: 13.5px; letter-spacing: 0.06em; text-transform: uppercase; border: 2px solid var(--ink); background: transparent; color: var(--ink); transition: background .18s ease, color .18s ease, transform .18s ease; }
+    .btn:hover { background: var(--ink); color: var(--white); transform: translateY(-1px); }
+    .btn-solid { background: var(--marigold); border-color: var(--marigold); color: var(--ink); }
+    .btn-solid:hover { background: var(--marigold-dk); border-color: var(--marigold-dk); color: var(--white); }
+    .btn-block { width: 100%; justify-content: center; }
+    .btn-sm { padding: 10px 18px; font-size: 12px; }
+
+    .hero { background: linear-gradient(180deg, var(--cream-deep), var(--cream) 70%); overflow: hidden; }
+    .hero .wrap { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; min-height: 520px; }
+    .hero-copy .eyebrow { margin-bottom: 14px; display: block; }
+    .hero-copy h1 { font-family: var(--font-display); font-size: clamp(42px, 5vw, 64px); line-height: 1.05; margin: 0 0 6px; font-weight: 700; letter-spacing: -0.5px; }
+    .hero-copy h1 span { color: var(--marigold-dk); display: block; font-style: italic; }
+    .hero-copy p { color: var(--ink-soft); max-width: 40ch; line-height: 1.7; margin: 18px 0 30px; font-weight: 300; font-size: 16px; }
+    .hero-visual { position: relative; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/5; box-shadow: var(--shadow-card-hover); }
+    .hero-visual img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(43,42,40,.25), transparent 40%); }
+    .hero-dots { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 2; }
+    .hero-dots span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.8); }
+    .hero-dots span.active { background: var(--marigold); border-color: var(--marigold); }
+
+    .section-head { text-align: center; margin: 0 0 44px; }
+    .section-head .eyebrow { justify-content: center; }
+    .section-head h2 { font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 40px); margin: 10px 0 8px; font-weight: 700; letter-spacing: -0.5px; }
+    .section-head p { color: var(--ink-soft); margin: 0; font-weight: 300; font-size: 15px; }
+
+    section.band { padding: 76px 0; }
+
+    .product-row { position: relative; display: flex; align-items: center; gap: 14px; }
+    .row-arrow { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-card); }
+    .row-arrow:hover { border-color: var(--marigold); color: var(--marigold-dk); }
+
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; flex: 1; }
+
+    .product-card { position: relative; background: var(--white); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); transition: box-shadow .2s ease, transform .2s ease; display: flex; flex-direction: column; }
+    .product-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
+    .product-media { position: relative; aspect-ratio: 4/5; background: var(--cream-deep); overflow: hidden; }
+    .product-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+    .product-card:hover .product-media img { transform: scale(1.05); }
+    .product-tag { position: absolute; top: 10px; left: 10px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .05em; padding: 4px 9px; border-radius: 20px; color: var(--white); }
+    .product-tag.new { background: var(--sage); }
+    .product-tag.sale { background: var(--blush); color: var(--ink); }
+
+    .wishlist-btn { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.92); border: none; display: flex; align-items: center; justify-content: center; color: var(--ink-soft); box-shadow: var(--shadow-card); z-index: 2; }
+    .wishlist-btn svg { width: 17px; height: 17px; }
+    .wishlist-btn:hover { color: var(--blush); }
+    .wishlist-btn.active { color: var(--blush); }
+    .wishlist-btn.active svg { fill: var(--blush); }
+
+    .product-body { padding: 16px 16px 18px; text-align: center; position: relative; }
+    .product-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.4; margin: 0 0 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-cat { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 4px; }
+    .product-name { font-weight: 600; font-size: 14.5px; margin: 0 0 8px; line-height: 1.3; font-family: var(--font-display); letter-spacing: -0.2px; }
+    .product-price { font-family: var(--font-mono); font-weight: 600; font-size: 14px; color: var(--marigold-dk); }
+    .product-price .was { color: var(--ink-soft); text-decoration: line-through; font-weight: 500; margin-right: 6px; }
+
+    .promo-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; }
+    .promo-stack { display: grid; gap: 26px; }
+    .promo-panel { position: relative; border-radius: var(--radius-lg); overflow: hidden; min-height: 260px; display: flex; align-items: center; padding: 40px; }
+    .promo-panel.tall { min-height: 546px; }
+    .promo-panel img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .promo-panel .scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(251,247,240,.94) 38%, rgba(251,247,240,.15)); z-index: 1; }
+    .promo-panel .content { position: relative; z-index: 2; max-width: 260px; }
+    .promo-panel .eyebrow { display: block; margin-bottom: 8px; }
+    .promo-panel h3 { font-family: var(--font-display); font-size: 30px; margin: 0 0 4px; font-weight: 700; line-height: 1.1; letter-spacing: -0.5px; }
+    .promo-panel h3.accent { color: var(--marigold-dk); font-style: italic; }
+    .promo-panel a.shop-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-weight: 700; font-size: 13px; border-bottom: 2px solid var(--ink); padding-bottom: 2px; }
+    .promo-watermark { position: absolute; bottom: -18px; left: 20px; font-family: var(--font-display); font-size: 74px; font-weight: 800; color: rgba(43,42,40,.05); z-index: 1; white-space: nowrap; }
+
+    .site-footer { background: var(--cream-deep); border-top: 1px solid var(--line); }
+    .footer-top { padding: 64px 0 40px; display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 40px; }
+    .footer-top h4 { font-family: var(--font-display); font-size: 15px; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 18px; }
+    .footer-about .logo { margin-bottom: 14px; }
+    .footer-about p { color: var(--ink-soft); font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+    .tag-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-pills a { border: 1px solid var(--line); padding: 7px 14px; border-radius: 20px; font-size: 12.5px; background: var(--white); }
+    .tag-pills a:hover { border-color: var(--marigold); color: var(--marigold-dk); }
+    .brand-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .brand-grid div { background: var(--white); border: 1px solid var(--line); border-radius: 8px; height: 50px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); }
+    .social-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    .social-row a { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; background: var(--white); font-size: 13px; }
+    .social-row a:hover { background: var(--marigold); border-color: var(--marigold); }
+    .newsletter-form { display: flex; gap: 0; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--white); }
+    .newsletter-form input { border: none; padding: 12px 14px; flex: 1; font-family: inherit; font-size: 13px; background: transparent; }
+    .newsletter-form input:focus { outline: none; }
+    .newsletter-form button { border: none; background: var(--marigold); color: var(--ink); padding: 0 18px; font-weight: 700; }
+    .newsletter-form button:hover { background: var(--marigold-dk); color: var(--white); }
+
+    .footer-links { border-top: 1px solid var(--line); padding: 22px 0; font-size: 12.5px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+    .footer-links a:hover { color: var(--marigold-dk); }
+    .footer-bottom { border-top: 1px solid var(--line); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--ink-soft); }
+    .payments { display: flex; align-items: center; gap: 12px; font-size: 12px; color: #333; }
+    .payments img { height: 24px; width: auto; display: block; object-fit: contain; }
+
+    .mobile-nav { position: fixed; inset: 0; z-index: 70; display: none; }
+    .mobile-nav.open { display: block; }
+    .mobile-nav .backdrop { position: absolute; inset: 0; background: rgba(43,42,40,.45); }
+    .mobile-nav .panel { position: absolute; top: 0; left: 0; bottom: 0; width: 280px; max-width: 84vw; background: var(--white); padding: 26px; overflow-y: auto; }
+    .mobile-nav .panel a { display: block; padding: 12px 0; font-weight: 600; border-bottom: 1px solid var(--line); }
+    .mobile-nav-close { background: none; border: none; font-size: 22px; margin-bottom: 16px; }
+
+    @media (max-width: 980px) {
+      .hero .wrap { grid-template-columns: 1fr; min-height: auto; padding-top: 40px; }
+      .hero-visual { aspect-ratio: 16/10; order: -1; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .promo-grid { grid-template-columns: 1fr; }
+      .promo-panel.tall { min-height: 320px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .wrap { padding: 0 18px; }
+      .utility-bar .links a:not(:first-child) { display: none; }
+      .main-nav { display: none; }
+      .burger { display: flex; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .footer-top { grid-template-columns: 1fr; padding: 44px 0 30px; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      section.band { padding: 52px 0; }
+      .row-arrow { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ============================================================
+       MOBILE ENHANCEMENTS — touch targets, breakpoints, typography
+       ============================================================ */
+    html, body { overflow-x: hidden; }
+
+    .icon-btn, .burger, .mobile-nav-close { min-width: 48px; min-height: 48px; }
+    .wishlist-btn { width: 44px; height: 44px; }
+    .btn { min-height: 48px; }
+    .btn-sm { min-height: 44px; padding: 12px 18px; }
+    .mobile-nav .panel a { min-height: 48px; display: flex; align-items: center; }
+    .header-actions { gap: 12px; }
+    .social-row a { width: 44px; height: 44px; }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 0 20px; }
+      section.band { padding: 48px 0; }
+      .promo-grid { grid-template-columns: 1fr; }
+    }
+
+/* ============================================================
+   MOBILE HEADER FIX — stops the wordmark from pushing the
+   search/cart icons off-screen on phones
+   ============================================================ */
+@media (max-width: 720px) {
+  .site-header .wrap { gap: 10px; }
+  .logo-img { height: 56px; width: 56px; }
+  .logo { font-size: 19px; gap: 8px; }
+  .header-actions { gap: 6px; }
+}
+
+@media (max-width: 480px) {
+  .site-header .wrap { height: 60px; gap: 8px; }
+  .logo-img { height: 36px; width: 36px; border-radius: 6px; }
+  .logo span { display: none; }
+}
+
+/* ============================================================
+   MOBILE MENU RESTRUCTURE — logo pinned top-left, search/cart
+   pinned top-right, and the account links (My Account, Wishlist,
+   Checkout, Login) relocated into the hamburger drawer beneath
+   the main nav links, left-aligned near the bottom of the panel.
+   The currency selector stays in the utility bar (NGN default),
+   now with room to display clearly since the account links row
+   is removed from the utility bar on mobile.
+   ============================================================ */
+@media (max-width: 720px) {
+  .site-header .wrap { justify-content: flex-start; }
+  .header-actions { margin-left: auto; }
+  .utility-bar .links:last-of-type { display: none; }
+}
+
+.mobile-nav-account-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 20px 0 2px;
+}
+</style>
+</head>
+<body>
+  <div class="utility-bar">
+    <div class="wrap">
+      <div class="links">
+        <select aria-label="Language"><option>English</option><option>Français</option><option>Español</option></select>
+        <select aria-label="Currency"><option>NGN</option><option>USD</option><option>EUR</option><option>GBP</option></select>
+      </div>
+      <div class="links">
+        <a href="account.html">My Account</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="account.html">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <button class="burger icon-btn" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a href="index.html" class="logo">
+      <img src="images/chic-logo.jpg" alt="Chic District & Co." class="logo-img">
+      <span>Chic District & Co.</span>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="shop.html?category=Dresses">Dresses</a>
+        <a href="shop.html?category=Tops">Tops</a>
+        <a href="shop.html?category=Bottoms">Bottoms</a>
+        <a href="shop.html?category=Outerwear">Outerwear</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        </button>
+        <a href="checkout.html" class="icon-btn" aria-label="Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="cart-count">1</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav">
+    <div class="backdrop"></div>
+    <div class="panel">
+      <button class="mobile-nav-close" aria-label="Close menu">✕</button>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="shop.html?category=Dresses">Dresses</a>
+      <a href="shop.html?category=Tops">Tops</a>
+      <a href="shop.html?category=Bottoms">Bottoms</a>
+      <a href="shop.html?category=Outerwear">Outerwear</a>
+      <a href="#contact">Contact</a>
+      <div class="mobile-nav-account-label">My Account</div>
+      <a href="account.html">My Account</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="account.html">Login</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow chic-mark">Spring Collection 2026</span>
+        <h1>Effortless Elegance,<span>Everyday Luxury.</span></h1>
+        <p>Discover refined silhouettes, sumptuous fabrics, and timeless designs crafted for the modern woman. From desk to dinner, make every moment chic.</p>
+        <a href="shop.html" class="btn btn-solid">Shop Now</a>
+      </div>
+      <div class="hero-visual">
+        <img id="hero-image" src="images/hero.jpg" alt="Spring 2026 women's lookbook cover art"
+             onerror="this.onerror=null;this.src='https://placehold.co/900x1100/f2d98a/2b2a28?font=playfair-display&text=Spring+Collection';">
+        <div class="hero-dots">
+          <span class="active"></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="new-arrivals">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow chic-mark">Just Landed</span>
+        <h2>New Arrivals</h2>
+        <p>The freshest styles, added every Friday.</p>
+      </div>
+      <div class="product-row">
+        <button class="row-arrow prev" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="product-grid" id="new-arrivals-grid"></div>
+        <button class="row-arrow next" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" style="padding-top:0;">
+    <div class="wrap">
+      <div class="promo-grid">
+        <div class="promo-panel tall" style="background:#EFE7D6;">
+          <div class="content">
+            <span class="eyebrow chic-mark">Trending Now</span>
+            <h3>The<br><span class="accent">Statement Blazer</span></h3>
+            <a href="shop.html?category=Outerwear" class="shop-link">Shop Now →</a>
+          </div>
+          <img id="promo-shoes-image" class="bg" src="images/promo-shoes.jpg" alt="Tailored women's blazer" style="opacity:.9;"
+               onerror="this.onerror=null;this.src='https://placehold.co/700x900/5b7b8a/f6efe2?font=playfair-display&text=Statement+Blazer';">
+          <div class="scrim"></div>
+          <div class="promo-watermark">ESSENTIAL</div>
+        </div>
+        <div class="promo-stack">
+          <div class="promo-panel" style="background:#F3D9D4;">
+            <div class="content">
+              <span class="eyebrow chic-mark">Limited Run</span>
+              <h3 class="accent">Silk<br>Camisole</h3>
+              <a href="shop.html?category=Tops" class="shop-link">Shop Now →</a>
+            </div>
+            <img id="promo-sweaters-image" class="bg" src="images/promo-sweaters.jpg" alt="Luxurious silk camisole top"
+                 onerror="this.onerror=null;this.src='https://placehold.co/700x520/e8836b/2b2a28?font=playfair-display&text=Silk+Camisole';">
+            <div class="scrim"></div>
+          </div>
+          <div class="promo-panel" style="background:#E4E9DC;">
+            <div class="content">
+              <span class="eyebrow chic-mark">New Accessory</span>
+              <h3>The<br><span class="accent">Leather Tote</span></h3>
+              <a href="shop.html?category=Accessories" class="shop-link">Shop Now →</a>
+            </div>
+            <img id="promo-accessories-image" class="bg" src="images/promo-accessories.jpg" alt="Elegant leather tote bag"
+                 onerror="this.onerror=null;this.src='https://placehold.co/700x520/93a67f/2b2a28?font=playfair-display&text=Leather+Tote';">
+            <div class="scrim"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" id="contact">
+    <div class="wrap footer-top">
+      <div class="footer-about">
+        <a href="index.html" class="logo">
+        <img src="images/logo.jpg" alt="Chic District & Co." class="logo-img">
+        <span>Chic District & Co.</span>
+      </a>
+        <p>📍 Back of Oba Palace, Abule-ado Festac 2, Lagos</p>
+        <p>📞 (+234) 813 908 1803</p>
+        <p>✉️ chicdistrict@gmail.com</p>
+      </div>
+      <div>
+        <h4>Popular Tags</h4>
+        <div class="tag-pills">
+          <a href="shop.html?category=Dresses">New In</a>
+          <a href="shop.html">Best Sellers</a>
+          <a href="shop.html">Sale</a>
+          <a href="shop.html?category=Outerwear">Outerwear</a>
+          <a href="shop.html">Lookbook</a>
+          <a href="shop.html">View All</a>
+        </div>
+      </div>
+      <div>
+        <h4>Trusted Brands</h4>
+        <div class="brand-grid">
+          <div>CHIC&nbsp;STUDIO</div><div>ATELIER&nbsp;NO.5</div>
+          <div>LUXE&nbsp;THREADS</div><div>MODERN&nbsp;MUSE</div>
+        </div>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Pinterest">PT</a>
+          <a href="#" aria-label="Facebook">FB</a>
+        </div>
+        <h4 style="margin-top:22px;">Newsletter</h4>
+        <form class="newsletter-form" onsubmit="return false;">
+          <input type="email" placeholder="Your email address" aria-label="Email address">
+          <button type="submit" aria-label="Sign up">→</button>
+        </form>
+      </div>
+    </div>
+    <div class="wrap footer-links">
+      <a href="#">Wholesale</a><a href="#">Privacy &amp; Security</a><a href="#">Help</a>
+      <a href="#">Seller Home</a><a href="#">Search Products</a><a href="#">Refined Products</a>
+      <a href="#">Prices</a><a href="#">Reviews</a><a href="#">Customer Service</a><a href="#">Terms of Use</a>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2026 Chic District &amp; Co. All Rights Reserved.</span>
+      <div class="payments">
+        <img src="images/visa.jpg" alt="Visa">
+        <i class="fa-brands fa-cc-mastercard"></i>
+        <i class="fa-brands fa-cc-amex"></i>
+        <i class="fa-brands fa-cc-paypal"></i>
+        <i class="fa-brands fa-apple-pay"></i>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       CHIC DISTRICT & CO. — product data loader
+       FIX: now points at the ONE unified Apps Script backend
+       (Code.gs) — same deployment used by account.html, checkout.html
+       and payment.html — instead of a separate products-only script.
+       ============================================================ */
+
+    (function () {
+      "use strict";
+
+      const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwst6GwoVOFi4aRZ9lhn7bEMCwW9IWvXtHTc_9xstgEgBpCQLmweKnjJKuo0UeMmzd3/exec";
+      window.CHIC_API_URL = SHEET_API_URL; // shared with the landing loader below
+
+      const FALLBACK_PRODUCTS = [
+        { id: 1, name: "Sunlit Linen Dress", description: "A breezy linen midi dress with a soft floral print, perfect for warm afternoons.", category: "Dresses", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Blush", colorHex: "e7a9a0", price: 89.99, salePrice: null, isNew: true, rating: 4.7, reviews: 58, sizes: "XS,S,M,L,XL", sku: "CC-00001", imageSrc: "images/girls-1.jpg" },
+        { id: 2, name: "Tailored Crop Trouser", description: "A sharp, cropped silhouette in seasonless wool crepe. Sits high on the waist.", category: "Bottoms", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Sage", colorHex: "93a67f", price: 110.00, salePrice: 88.00, isNew: false, rating: 4.5, reviews: 34, sizes: "XS,S,M,L,XL", sku: "CC-00002", imageSrc: "images/boys-1.jpg" },
+        { id: 3, name: "Cashmere Crewneck", description: "Lightweight, ultra-soft cashmere knit with a relaxed fit and ribbed trim.", category: "Tops", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Cream", colorHex: "f6efe2", price: 145.00, salePrice: null, isNew: true, rating: 4.9, reviews: 112, sizes: "XS,S,M,L", sku: "CC-00003", imageSrc: "images/baby-1.jpg" },
+        { id: 4, name: "Block Heel Mule", description: "A sculptural heel adds modern edge to a classic slip-on mule.", category: "Shoes", ageGroup: "36-41", ageGroupLabel: "36–41", color: "Marigold", colorHex: "d9a441", price: 130.00, salePrice: null, isNew: false, rating: 4.6, reviews: 89, sizes: "36,37,38,39,40,41", sku: "CC-00004", imageSrc: "images/shoes-1.jpg" },
+        { id: 5, name: "Silk Twill Scarf", description: "The finishing touch — small details, beautifully made, in pure silk twill.", category: "Accessories", ageGroup: "One Size", ageGroupLabel: "One Size", color: "Butter", colorHex: "f2d98a", price: 65.00, salePrice: 45.00, isNew: true, rating: 4.4, reviews: 21, sizes: "One Size", sku: "CC-00005", imageSrc: "images/accessories-1.jpg" },
+        { id: 6, name: "Pleated Midi Skirt", description: "Twirl-ready knife pleats over a silky lining — party-perfect and office-appropriate.", category: "Bottoms", ageGroup: "XS-XL", ageGroupLabel: "XS–XL", color: "Blush", colorHex: "e7a9a0", price: 95.00, salePrice: null, isNew: false, rating: 4.8, reviews: 64, sizes: "XS,S,M,L,XL", sku: "CC-00006", imageSrc: "images/girls-2.jpg" },
+      ];
+
+      function normalizeProduct(raw) {
+        const sizes = String(raw.sizes || "")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+
+        const isNewRaw = raw.isNew;
+        const isNew =
+          isNewRaw === true ||
+          String(isNewRaw).trim().toUpperCase() === "TRUE";
+
+        const salePriceRaw = raw.salePrice;
+        const salePrice =
+          salePriceRaw === "" || salePriceRaw == null || isNaN(Number(salePriceRaw))
+            ? null
+            : Number(salePriceRaw);
+
+        return {
+          id: Number(raw.id),
+          name: String(raw.name || "").trim(),
+          description: String(raw.description || "").trim(),
+          category: String(raw.category || "").trim(),
+          ageGroup: String(raw.ageGroup || "").trim(),
+          ageGroupLabel: String(raw.ageGroupLabel || raw.ageGroup || "").trim(),
+          color: String(raw.color || "").trim(),
+          colorHex: String(raw.colorHex || "d9a441").trim().replace(/^#/, ""),
+          price: Number(raw.price) || 0,
+          salePrice,
+          isNew,
+          rating: Number(raw.rating) || 0,
+          reviews: Number(raw.reviews) || 0,
+          sizes: sizes.length ? sizes : ["S", "M", "L"],
+          sku: String(raw.sku || "").trim(),
+          imageSrc: String(raw.imageSrc || "").trim(),
+        };
+      }
+
+      function productImage(p) {
+        return p.imageSrc || productImageFallback(p);
+      }
+      function productImageFallback(p, w = 400, h = 500) {
+        const hex = (p && p.colorHex) || "d9a441";
+        const label = (p && p.category) || "Product";
+        return `https://placehold.co/${w}x${h}/${hex}/2b2a28?font=playfair-display&text=${encodeURIComponent(label)}`;
+      }
+
+      // FIX: shared price formatter — renders 15679.99 as "15,679.99"
+      // (thousands comma separator + fixed 2 decimals).
+      function formatPrice(n) {
+        const num = Number(n) || 0;
+        return num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      window.chicProductImage = productImage;
+      window.chicProductImageFallback = productImageFallback;
+      window.chicFormatPrice = formatPrice;
+
+      window.CHIC_READY = (async function loadProducts() {
+        let usingFallback = false;
+        try {
+          const url = SHEET_API_URL + "?action=getProducts";
+          const res = await fetch(url, { method: "GET", redirect: "follow", cache: "no-store" });
+          if (!res.ok) throw new Error("Sheet fetch failed: HTTP " + res.status);
+          const raw = await res.json();
+          if (raw && raw.error) throw new Error(raw.error);
+          const products = (Array.isArray(raw) ? raw : []).map(normalizeProduct).filter((p) => p.id);
+          if (!products.length) throw new Error("Sheet returned zero products");
+          window.CHIC_PRODUCTS = products;
+        } catch (err) {
+          console.warn("Chic District: showing sample data —", err.message);
+          window.CHIC_PRODUCTS = FALLBACK_PRODUCTS.map(normalizeProduct);
+          usingFallback = true;
+        }
+
+        window.CHIC_SOURCE = usingFallback ? "fallback" : "sheet";
+
+        if (usingFallback) {
+          document.addEventListener("DOMContentLoaded", () => {
+            const bar = document.createElement("div");
+            bar.textContent =
+              "Showing sample data — check your Apps Script deployment to go live.";
+            bar.style.cssText =
+              "background:#F2D98A;color:#2B2A28;font-size:12.5px;font-weight:600;text-align:center;padding:8px 12px;";
+            document.body.prepend(bar);
+          });
+        }
+
+        return window.CHIC_PRODUCTS;
+      })();
+    })();
+  </script>
+  <script>
+    /* ============================================================
+       CHIC DISTRICT & CO. — landing content loader
+       FIX: was left on the "PASTE_YOUR..." placeholder (never
+       actually connected), so it silently ran on fallback content
+       forever. Now points at the same unified backend and reads
+       action=getLanding, which returns { rows, map } — we use
+       `map` (elementId -> value) since chicLanding() below does
+       flat key lookups like "hero.image".
+       ============================================================ */
+
+    (function () {
+      "use strict";
+
+      const SHEET_API_URL = window.CHIC_API_URL ||
+        "https://script.google.com/macros/s/AKfycbwst6GwoVOFi4aRZ9lhn7bEMCwW9IWvXtHTc_9xstgEgBpCQLmweKnjJKuo0UeMmzd3/exec";
+
+      const FALLBACK_LANDING = {
+        "hero.image": "images/hero.jpg",
+        "hero.alt": "Spring 2026 women's lookbook cover art",
+        "promo_shoes.image": "images/promo-shoes.jpg",
+        "promo_shoes.alt": "Tailored women's blazer",
+        "promo_sweaters.image": "images/promo-sweaters.jpg",
+        "promo_sweaters.alt": "Luxurious silk camisole top",
+        "promo_accessories.image": "images/promo-accessories.jpg",
+        "promo_accessories.alt": "Elegant leather tote bag",
+        "payment.1.label": "VISA",
+        "payment.1.image": "",
+        "payment.2.label": "MasterCard",
+        "payment.2.image": "",
+        "payment.3.label": "PayPal",
+        "payment.3.image": "",
+        "payment.4.label": "Amex",
+        "payment.4.image": "",
+      };
+
+      window.CHIC_LANDING_READY = (async function loadLanding() {
+        let usingFallback = false;
+        try {
+          const url = SHEET_API_URL + "?action=getLanding";
+          const res = await fetch(url, { method: "GET", redirect: "follow", cache: "no-store" });
+          if (!res.ok) throw new Error("Landing fetch failed: HTTP " + res.status);
+          const raw = await res.json();
+          if (raw && raw.error) throw new Error(raw.error);
+          const map = raw && raw.map ? raw.map : null;
+          if (!map || typeof map !== "object" || !Object.keys(map).length) {
+            throw new Error("Landing tab returned no rows");
+          }
+          window.CHIC_LANDING = map;
+        } catch (err) {
+          console.warn("Chic District: landing images using sample data —", err.message);
+          window.CHIC_LANDING = FALLBACK_LANDING;
+          usingFallback = true;
+        }
+        window.CHIC_LANDING_SOURCE = usingFallback ? "fallback" : "sheet";
+        return window.CHIC_LANDING;
+      })();
+
+      window.chicLanding = function (key, fallback) {
+        const data = window.CHIC_LANDING || {};
+        const v = data[key];
+        return v !== undefined && v !== null && String(v).trim() !== "" ? v : fallback;
+      };
+    })();
+  </script>
+  <script>
+    /* ==========================================================================
+       CHIC DISTRICT & CO. — shared behaviors, cart + wishlist (localStorage-backed)
+       ========================================================================== */
+    (function () {
+      "use strict";
+
+      const CART_KEY = "chic_cart_v1";
+      const WISHLIST_KEY = "chic_wishlist_v1";
+
+      function readJSON(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          const parsed = JSON.parse(raw);
+          return parsed ?? fallback;
+        } catch (e) {
+          return fallback;
+        }
+      }
+      function writeJSON(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {
+          /* storage unavailable (private browsing etc) — fail silently */
+        }
+      }
+
+      function getCart() {
+        return readJSON(CART_KEY, []); // [{id, qty}]
+      }
+      function saveCart(cart) {
+        writeJSON(CART_KEY, cart);
+        updateCartBadge();
+      }
+      function addToCart(id, qty = 1) {
+        const cart = getCart();
+        const existing = cart.find((c) => c.id === id);
+        if (existing) existing.qty += qty;
+        else cart.push({ id, qty });
+        saveCart(cart);
+      }
+      function removeFromCart(id) {
+        saveCart(getCart().filter((c) => c.id !== id));
+      }
+      function cartCount() {
+        return getCart().reduce((sum, c) => sum + c.qty, 0);
+      }
+
+      function getWishlist() {
+        return readJSON(WISHLIST_KEY, []); // [id, id, ...]
+      }
+      function saveWishlist(list) {
+        writeJSON(WISHLIST_KEY, list);
+      }
+      function isWishlisted(id) {
+        return getWishlist().includes(id);
+      }
+      function toggleWishlist(id) {
+        let list = getWishlist();
+        const has = list.includes(id);
+        list = has ? list.filter((x) => x !== id) : [...list, id];
+        saveWishlist(list);
+        return !has;
+      }
+
+      function updateCartBadge() {
+        document.querySelectorAll(".cart-count").forEach((el) => (el.textContent = cartCount()));
+      }
+
+      function refreshWishlistIcons() {
+        document.querySelectorAll("[data-wishlist-toggle]").forEach((btn) => {
+          const id = Number(btn.dataset.wishlistToggle);
+          btn.classList.toggle("active", isWishlisted(id));
+        });
+      }
+
+      window.Chic = {
+        getCart, saveCart, addToCart, removeFromCart, cartCount,
+        getWishlist, isWishlisted, toggleWishlist,
+        updateCartBadge, refreshWishlistIcons,
+      };
+
+      function applyLandingImages() {
+        const heroImg = document.getElementById("hero-image");
+        if (heroImg) {
+          heroImg.src = window.chicLanding("hero.image", heroImg.getAttribute("src"));
+          heroImg.alt = window.chicLanding("hero.alt", heroImg.getAttribute("alt"));
+        }
+
+        ["shoes", "sweaters", "accessories"].forEach((key) => {
+          const img = document.getElementById(`promo-${key}-image`);
+          if (!img) return;
+          img.src = window.chicLanding(`promo_${key}.image`, img.getAttribute("src"));
+          img.alt = window.chicLanding(`promo_${key}.alt`, img.getAttribute("alt"));
+        });
+
+        const paymentsEl = document.querySelector(".payments");
+        if (paymentsEl) {
+          const items = [1, 2, 3, 4]
+            .map((n) => ({
+              label: window.chicLanding(`payment.${n}.label`, ""),
+              image: window.chicLanding(`payment.${n}.image`, ""),
+            }))
+            .filter((p) => p.label);
+
+          if (items.length) {
+            paymentsEl.innerHTML = "";
+            items.forEach((p) => {
+              const wrapper = document.createElement("span");
+              if (p.image) {
+                const img = document.createElement("img");
+                img.src = p.image;
+                img.alt = p.label;
+                img.onerror = () => {
+                  wrapper.textContent = p.label;
+                };
+                wrapper.appendChild(img);
+              } else {
+                wrapper.textContent = p.label;
+              }
+              paymentsEl.appendChild(wrapper);
+            });
+          }
+        }
+      }
+
+      function whenDomReady(fn) {
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", fn);
+        } else {
+          fn();
+        }
+      }
+
+      if (window.CHIC_LANDING_READY) {
+        window.CHIC_LANDING_READY.then(() => whenDomReady(applyLandingImages));
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const burger = document.querySelector(".burger");
+        const mobileNav = document.querySelector(".mobile-nav");
+        const mobileClose = document.querySelector(".mobile-nav-close");
+        if (burger && mobileNav) {
+          burger.addEventListener("click", () => mobileNav.classList.add("open"));
+          mobileNav.querySelector(".backdrop").addEventListener("click", () => mobileNav.classList.remove("open"));
+          if (mobileClose) mobileClose.addEventListener("click", () => mobileNav.classList.remove("open"));
+        }
+
+        updateCartBadge();
+        refreshWishlistIcons();
+
+        document.body.addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-add-to-cart]");
+          if (!btn) return;
+          const id = Number(btn.dataset.addToCart);
+          if (id) addToCart(id, 1);
+          const original = btn.dataset.label || btn.textContent;
+          btn.dataset.label = original;
+          btn.textContent = "Added ✓";
+          setTimeout(() => (btn.textContent = original), 1200);
+        });
+
+        document.body.addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-wishlist-toggle]");
+          if (!btn) return;
+          const id = Number(btn.dataset.wishlistToggle);
+          const nowActive = toggleWishlist(id);
+          btn.classList.toggle("active", nowActive);
+        });
+
+        document.querySelectorAll(".product-row").forEach((row) => {
+          const grid = row.querySelector(".product-grid");
+          const prev = row.querySelector(".row-arrow.prev");
+          const next = row.querySelector(".row-arrow.next");
+          if (!grid) return;
+          const scrollAmount = 320;
+          if (prev) prev.addEventListener("click", () => grid.scrollBy({ left: -scrollAmount, behavior: "smooth" }));
+          if (next) next.addEventListener("click", () => grid.scrollBy({ left: scrollAmount, behavior: "smooth" }));
+        });
+      });
+    })();
+  </script>
+  <script>
+    (async function () {
+      await window.CHIC_READY;
+      const grid = document.getElementById("new-arrivals-grid");
+      let items = window.CHIC_PRODUCTS.filter(p => p.isNew).slice(0, 8);
+      if (!items.length) items = window.CHIC_PRODUCTS.slice(0, 8);
+      grid.innerHTML = items.map(cardHTML).join("");
+      if (window.Chic) window.Chic.refreshWishlistIcons();
+
+      function cardHTML(p) {
+        const price = p.salePrice
+        ? `<span class="was">₦${window.chicFormatPrice(p.price)}</span>₦${window.chicFormatPrice(p.salePrice)}`
+        : `₦${window.chicFormatPrice(p.price)}`;
+        const tag = p.salePrice
+          ? `<span class="product-tag sale">Sale</span>`
+          : p.isNew ? `<span class="product-tag new">New</span>` : "";
+        return `
+          <article class="product-card">
+            <a href="shop.html?category=${encodeURIComponent(p.category)}" class="product-media">
+              ${tag}
+              <img src="${window.chicProductImage(p)}" alt="${p.name}" loading="lazy"
+                   onerror="this.onerror=null;this.src='${window.chicProductImageFallback(p)}';">
+            </a>
+            <button class="wishlist-btn" data-wishlist-toggle="${p.id}" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4.5 5.5 4c2-.3 3.7.7 4.5 2.2C10.8 4.7 12.5 3.7 14.5 4c3.5.5 5.1 4 3.5 7.7C15.5 16.4 12 21 12 21z"/></svg>
+            </button>
+            <div class="product-body">
+              <p class="product-cat">${p.category} · ${p.ageGroupLabel}</p>
+              <h3 class="product-name">${p.name}</h3>
+              ${p.description ? `<p class="product-desc">${p.description}</p>` : ""}
+              <p class="product-price">${price}</p>
+              <button class="btn btn-sm btn-block" style="margin-top:10px;" data-add-to-cart="${p.id}">Add to cart</button>
+            </div>
+          </article>`;
+      }
+    })();
+  </script>
+</body>
+</html>
