@@ -774,6 +774,15 @@ html, body { overflow-x: hidden; }
   color: var(--ink-soft);
   margin: 20px 0 2px;
 }
+
+/* ============================================================
+   NAIRA SIGN — drawn with CSS (an "N" plus two bars) so it shows
+   on every phone, even ones whose fonts don't include the naira glyph.
+   ============================================================ */
+.naira { position: relative; display: inline-block; font-style: normal; line-height: 1; margin-right: .04em; }
+.naira::before, .naira::after { content: ""; position: absolute; left: -0.08em; right: -0.08em; height: 0.07em; background: currentColor; border-radius: 1px; }
+.naira::before { top: 0.40em; }
+.naira::after  { top: 0.56em; }
 </style>
 </head>
 <body>
@@ -801,7 +810,7 @@ html, body { overflow-x: hidden; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
       <a href="index.html" class="logo">
-        <img src="images/chic-logo.jpg" alt="Chic District & Co." class="logo-img">
+        <img src="images/chic-logo.png" alt="Chic District & Co." class="logo-img">
         <span>Chic District & Co.</span>
       </a>
       <nav class="main-nav">
@@ -1275,8 +1284,8 @@ html, body { overflow-x: hidden; }
     // FIX: comma-separated thousands via chicFormatPrice() instead of
     // raw .toFixed(2), so e.g. 15679.99 renders as "15,679.99".
     const price = p.salePrice
-      ? `<span class="was">₦${window.chicFormatPrice(p.price)}</span>₦${window.chicFormatPrice(p.salePrice)}`
-      : `₦${window.chicFormatPrice(p.price)}`;
+      ? `<span class="was"><span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(p.price)}</span><span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(p.salePrice)}`
+      : `<span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(p.price)}`;
     const tag = p.salePrice ? `<span class="product-tag sale">Sale</span>` : p.isNew ? `<span class="product-tag new">New</span>` : "";
     return `
       <article class="product-card">
@@ -1303,7 +1312,7 @@ html, body { overflow-x: hidden; }
     state.ages.forEach((v) => chips.push({ label: AGE_GROUPS.find((a) => a.id === v).label, group: "ages", value: v }));
     state.sizes.forEach((v) => chips.push({ label: `Size ${v}`, group: "sizes", value: v }));
     state.colors.forEach((v) => chips.push({ label: v, group: "colors", value: v }));
-    if (state.priceMin !== null || state.priceMax !== null) chips.push({ label: `₦${state.priceMin ?? 0} – ₦${state.priceMax ?? "∞"}`, group: "price", value: "price" });
+    if (state.priceMin !== null || state.priceMax !== null) chips.push({ label: `<span class='naira' role='img' aria-label='naira'>N</span>${state.priceMin ?? 0} – <span class='naira' role='img' aria-label='naira'>N</span>${state.priceMax ?? "∞"}`, group: "price", value: "price" });
     els.activeChips.innerHTML = chips.map((c) => `
       <span class="chip" data-group="${c.group}" data-value="${c.value}">
         ${c.label} <button aria-label="Remove filter">✕</button>
