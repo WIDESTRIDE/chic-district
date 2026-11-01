@@ -237,6 +237,32 @@ html, body { overflow-x: hidden; }
   color: var(--ink-soft);
   margin: 20px 0 2px;
 }
+
+/* ============================================================
+   CART CONTROLS — quantity stepper + remove link in order summary
+   ============================================================ */
+.qty-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+.qty-stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--white); }
+.qty-stepper button { width: 36px; height: 36px; border: none; background: var(--cream); font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1; }
+.qty-stepper button:hover { background: var(--marigold-pale); }
+.qty-stepper button:disabled { opacity: .4; cursor: not-allowed; }
+.qty-stepper .qty-val { min-width: 32px; text-align: center; font-size: 13px; font-weight: 700; }
+.remove-item { background: none; border: none; padding: 8px 4px; font-size: 12px; font-weight: 700; color: #a2412f; text-decoration: underline; min-height: 36px; }
+.remove-item:hover { color: #7d2a1c; }
+.edit-cart-link { display: inline-block; margin-bottom: 10px; font-size: 12.5px; font-weight: 700; color: var(--marigold-dk); text-decoration: underline; }
+@media (max-width: 480px) {
+  .summary-line-item { align-items: flex-start; }
+  .summary-line-item .price { padding-top: 2px; }
+}
+
+/* ============================================================
+   NAIRA SIGN — drawn with CSS (an "N" plus two bars) so it shows
+   on every phone, even ones whose fonts don't include the naira glyph.
+   ============================================================ */
+.naira { position: relative; display: inline-block; font-style: normal; line-height: 1; margin-right: .04em; }
+.naira::before, .naira::after { content: ""; position: absolute; left: -0.08em; right: -0.08em; height: 0.07em; background: currentColor; border-radius: 1px; }
+.naira::before { top: 0.40em; }
+.naira::after  { top: 0.56em; }
 </style>
 </head>
 <body>
@@ -262,7 +288,7 @@ html, body { overflow-x: hidden; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
       <a href="index.html" class="logo">
-        <img src="images/chic-logo.jpg" alt="Chic District & Co." class="logo-img">
+        <img src="images/chic-logo.png" alt="Chic District & Co." class="logo-img">
         <span>Chic District & Co.</span>
       </a>
       <nav class="main-nav">
@@ -386,7 +412,7 @@ html, body { overflow-x: hidden; }
         </label>
         <label class="filter-option" style="padding:10px 0;">
           <input type="radio" name="delivery" value="express" style="accent-color:var(--marigold-dk);">
-          Express Shipping (1–2 business days) <span class="count" style="margin-left:auto; font-family:var(--font-mono);">₦12,000.00</span>
+          Express Shipping (1–2 business days) <span class="count" style="margin-left:auto; font-family:var(--font-mono);"><span class='naira' role='img' aria-label='naira'>N</span>12,000.00</span>
         </label>
       </div>
 
@@ -557,8 +583,34 @@ html, body { overflow-x: hidden; }
   function saveCart(cart) { writeJSON(CART_KEY, cart); updateCartBadge(); }
   function addToCart(id, qty = 1) { const cart = getCart(); const existing = cart.find((c) => c.id === id); if (existing) existing.qty += qty; else cart.push({ id, qty }); saveCart(cart); }
   function removeFromCart(id) { saveCart(getCart().filter((c) => c.id !== id)); }
+  function setQty(id, qty) {
+    const cart = getCart();
+    const line = cart.find((c) => c.id === id);
+    if (!line) return;
+    if (qty < 1) { removeFromCart(id); return; }
+    line.qty = qty;
+    saveCart(cart);
+  }
   function cartCount() { return getCart().reduce((sum, c) => sum + c.qty, 0); }
-  function cartItemsWithProducts() { const products = window.CHIC_PRODUCTS || []; return getCart().map((c) => { const product = products.find((p) => p.id === c.id); return product ? { ...c, product } : null; }).filter(Boolean); }
+  // Rebuild a line from the snapshot saved on the shop page if its product
+  // isn't in the currently loaded list, instead of silently dropping it.
+  function cartItemsWithProducts() {
+    const products = window.CHIC_PRODUCTS || [];
+    return getCart().map((c) => {
+      const live = products.find((p) => p.id === c.id)
+        || (c.sku && products.find((p) => p.sku === c.sku));
+      if (live) return { ...c, product: live };
+      if (c.name) {
+        return { ...c, product: {
+          id: c.id, name: c.name, price: Number(c.originalPrice ?? c.price) || 0,
+          salePrice: c.originalPrice != null && Number(c.price) !== Number(c.originalPrice) ? Number(c.price) : null,
+          category: c.category || "", color: c.color || "", colorHex: c.colorHex || "d9a441",
+          ageGroupLabel: c.ageGroupLabel || "", sku: c.sku || "", imageSrc: c.imageSrc || "",
+        } };
+      }
+      return null;
+    }).filter(Boolean);
+  }
 
   function getWishlist() { return readJSON(WISHLIST_KEY, []); }
   function saveWishlist(list) { writeJSON(WISHLIST_KEY, list); }
@@ -568,7 +620,7 @@ html, body { overflow-x: hidden; }
   function updateCartBadge() { document.querySelectorAll(".cart-count").forEach((el) => (el.textContent = cartCount())); }
   function refreshWishlistIcons() { document.querySelectorAll("[data-wishlist-toggle]").forEach((btn) => { const id = Number(btn.dataset.wishlistToggle); btn.classList.toggle("active", isWishlisted(id)); }); }
 
-  window.Chic = { getCart, saveCart, addToCart, removeFromCart, cartCount, cartItemsWithProducts, getWishlist, isWishlisted, toggleWishlist, updateCartBadge, refreshWishlistIcons };
+  window.Chic = { getCart, saveCart, addToCart, removeFromCart, setQty, cartCount, cartItemsWithProducts, getWishlist, isWishlisted, toggleWishlist, updateCartBadge, refreshWishlistIcons };
 
   document.addEventListener("DOMContentLoaded", () => {
     const burger = document.querySelector(".burger");
@@ -617,38 +669,80 @@ html, body { overflow-x: hidden; }
 
     const itemsEl = document.getElementById("summary-items");
     const totalsEl = document.getElementById("summary-totals");
-    const cart = window.Chic.cartItemsWithProducts();
 
-    if (!cart.length) {
-      itemsEl.innerHTML = `<p style="color:var(--ink-soft); font-size:13.5px; padding:10px 0;">Your cart is empty. <a href="shop.html" style="color:var(--marigold-dk); font-weight:600;">Browse the shop →</a></p>`;
-      totalsEl.innerHTML = "";
-    } else {
+    function deliveryCost() {
+      const d = document.querySelector('input[name="delivery"]:checked');
+      return d && d.value === "express" ? 12000 : 0;
+    }
+
+    // Re-draws the summary every time the cart or delivery choice changes.
+    function renderSummary() {
+      const cart = window.Chic.cartItemsWithProducts();
+
+      if (!cart.length) {
+        itemsEl.innerHTML = `<p style="color:var(--ink-soft); font-size:13.5px; padding:10px 0;">Your cart is empty. <a href="shop.html" style="color:var(--marigold-dk); font-weight:600;">Browse the shop →</a></p>`;
+        totalsEl.innerHTML = "";
+        return;
+      }
+
       itemsEl.innerHTML = cart.map(({ product: p, qty }) => {
         const unit = p.salePrice ?? p.price;
         return `
-          <div class="summary-line-item">
+          <div class="summary-line-item" data-line="${p.id}">
             <img src="${window.chicProductImage(p)}" alt="${p.name}"
                  onerror="this.onerror=null;this.src='${window.chicProductImageFallback(p)}';">
             <div class="info">
               <div class="name">${p.name}</div>
-              <div class="meta">${p.ageGroupLabel} · Qty ${qty}</div>
+              <div class="meta">${p.ageGroupLabel}${p.ageGroupLabel ? " · " : ""}<span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(unit)} each</div>
+              <div class="qty-row">
+                <div class="qty-stepper" role="group" aria-label="Quantity for ${p.name}">
+                  <button type="button" data-qty-dec="${p.id}" aria-label="Reduce quantity" ${qty <= 1 ? "disabled" : ""}>−</button>
+                  <span class="qty-val">${qty}</span>
+                  <button type="button" data-qty-inc="${p.id}" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="remove-item" data-remove-line="${p.id}">Remove</button>
+              </div>
             </div>
-            <div class="price">₦${window.chicFormatPrice(unit * qty)}</div>
+            <div class="price"><span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(unit * qty)}</div>
           </div>`;
       }).join("");
 
       const subtotal = cart.reduce((sum, { product: p, qty }) => sum + (p.salePrice ?? p.price) * qty, 0);
-      const shipping = 0;
+      const shipping = deliveryCost();
       const tax = subtotal * 0.075;
       const total = subtotal + shipping + tax;
 
       totalsEl.innerHTML = `
-        <div class="row"><span>Subtotal</span><span>₦${window.chicFormatPrice(subtotal)}</span></div>
-        <div class="row"><span>Shipping</span><span>${shipping === 0 ? "Free" : "₦" + window.chicFormatPrice(shipping)}</span></div>
-        <div class="row"><span>Estimated tax</span><span>₦${window.chicFormatPrice(tax)}</span></div>
-        <div class="row grand"><span>Total</span><span>₦${window.chicFormatPrice(total)}</span></div>
+        <div class="row"><span>Subtotal</span><span><span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(subtotal)}</span></div>
+        <div class="row"><span>Shipping</span><span>${shipping === 0 ? "Free" : "<span class='naira' role='img' aria-label='naira'>N</span>" + window.chicFormatPrice(shipping)}</span></div>
+        <div class="row"><span>Estimated tax</span><span><span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(tax)}</span></div>
+        <div class="row grand"><span>Total</span><span><span class='naira' role='img' aria-label='naira'>N</span>${window.chicFormatPrice(total)}</span></div>
       `;
     }
+
+    // One listener handles −, + and Remove for every line.
+    itemsEl.addEventListener("click", (e) => {
+      const dec = e.target.closest("[data-qty-dec]");
+      const inc = e.target.closest("[data-qty-inc]");
+      const rem = e.target.closest("[data-remove-line]");
+      if (!dec && !inc && !rem) return;
+      const id = Number((dec || inc || rem).dataset.qtyDec || (dec || inc || rem).dataset.qtyInc || (dec || inc || rem).dataset.removeLine);
+      const line = window.Chic.getCart().find((c) => c.id === id);
+      if (!line) return;
+      if (rem) {
+        if (!confirm("Remove this item from your cart?")) return;
+        window.Chic.removeFromCart(id);
+      } else if (dec) {
+        window.Chic.setQty(id, line.qty - 1);
+      } else {
+        window.Chic.setQty(id, line.qty + 1);
+      }
+      renderSummary();
+    });
+
+    document.querySelectorAll('input[name="delivery"]').forEach((r) => r.addEventListener("change", renderSummary));
+
+    renderSummary();
 
     // ---- prefill from a logged-in profile, if any ----
     try {
@@ -683,7 +777,7 @@ html, body { overflow-x: hidden; }
 
       const required = ["email", "firstName", "lastName", "address", "city", "postalCode", "phone"];
       const missing = required.some((k) => !fields[k]);
-      if (missing || !cart.length) {
+      if (missing || !window.Chic.cartItemsWithProducts().length) {
         errorEl.style.display = "block";
         return;
       }
