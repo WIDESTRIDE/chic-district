@@ -218,6 +218,15 @@ html, body { overflow-x: hidden; }
   color: var(--ink-soft);
   margin: 20px 0 2px;
 }
+
+/* ============================================================
+   NAIRA SIGN — drawn with CSS (an "N" plus two bars) so it shows
+   on every phone, even ones whose fonts don't include the naira glyph.
+   ============================================================ */
+.naira { position: relative; display: inline-block; font-style: normal; line-height: 1; margin-right: .04em; }
+.naira::before, .naira::after { content: ""; position: absolute; left: -0.08em; right: -0.08em; height: 0.07em; background: currentColor; border-radius: 1px; }
+.naira::before { top: 0.40em; }
+.naira::after  { top: 0.56em; }
 </style>
 </head>
 <body>
@@ -243,7 +252,7 @@ html, body { overflow-x: hidden; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
       <a href="index.html" class="logo">
-        <img src="images/chic-logo.jpg" alt="Chic District & Co." class="logo-img">
+        <img src="images/chic-logo.png" alt="Chic District & Co." class="logo-img">
         <span>Chic District & Co.</span>
       </a>
       <nav class="main-nav">
@@ -410,7 +419,7 @@ html, body { overflow-x: hidden; }
           <div class="summary-cards">
             <div class="summary-card"><div class="num" id="order-count">0</div><div class="label">Orders placed</div></div>
             <div class="summary-card"><div class="num" id="wishlist-count">3</div><div class="label">Items in wishlist</div></div>
-            <div class="summary-card"><div class="num">₦0</div><div class="label">Store credit</div></div>
+            <div class="summary-card"><div class="num"><span class='naira' role='img' aria-label='naira'>N</span>0</div><div class="label">Store credit</div></div>
           </div>
         </div>
 
@@ -721,7 +730,7 @@ html, body { overflow-x: hidden; }
               <td>${o.orderId || "—"}</td>
               <td>${(o.createdAt || "").slice(0, 10)}</td>
               <td>${Array.isArray(o.items) ? o.items.length : 0}</td>
-              <td>₦${Number(o.total || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+              <td><span class='naira' role='img' aria-label='naira'>N</span>${Number(o.total || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
               <td><span class="status-pill ${o.paymentStatus === 'paid' ? 'delivered' : o.paymentStatus === 'pending' ? 'pending' : 'processing'}">${o.paymentStatus || "—"}</span></td>
               <td><span class="status-pill ${o.orderStatus === 'delivered' ? 'delivered' : o.orderStatus === 'shipped' ? 'shipped' : 'processing'}">${o.orderStatus || "—"}</span></td>
             </tr>
